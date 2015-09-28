@@ -4,20 +4,25 @@
 #
 Name     : requests-mock
 Version  : 0.6.0
-Release  : 8
+Release  : 9
 URL      : https://pypi.python.org/packages/source/r/requests-mock/requests-mock-0.6.0.tar.gz
 Source0  : https://pypi.python.org/packages/source/r/requests-mock/requests-mock-0.6.0.tar.gz
 Summary  : Mock out responses from the requests package
 Group    : Development/Tools
 License  : Apache-2.0
 Requires: requests-mock-python
+BuildRequires : extras
+BuildRequires : fixtures
+BuildRequires : funcsigs-python
 BuildRequires : pbr
-BuildRequires : pbr-python
 BuildRequires : pip
-BuildRequires : pip-python
 BuildRequires : python-dev
+BuildRequires : python-mock
 BuildRequires : python3-dev
+BuildRequires : requests
 BuildRequires : setuptools
+BuildRequires : six
+BuildRequires : testtools
 
 %description
 ===============================
@@ -41,10 +46,15 @@ python components for the requests-mock package.
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
+%check
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+py.test-2.7 --verbose py2 || :
 %install
 rm -rf %{buildroot}
-python2 setup.py build -b py2 install --root=%{buildroot}
-python3 setup.py build -b py3 install --root=%{buildroot}
+python2 -tt setup.py build -b py2 install --root=%{buildroot}
+python3 -tt setup.py build -b py3 install --root=%{buildroot}
 
 %files
 %defattr(-,root,root,-)
