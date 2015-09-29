@@ -4,7 +4,7 @@
 #
 Name     : requests-mock
 Version  : 0.6.0
-Release  : 9
+Release  : 10
 URL      : https://pypi.python.org/packages/source/r/requests-mock/requests-mock-0.6.0.tar.gz
 Source0  : https://pypi.python.org/packages/source/r/requests-mock/requests-mock-0.6.0.tar.gz
 Summary  : Mock out responses from the requests package
