@@ -1,6 +1,16 @@
 CHANGES
 =======
 
+1.1.0
+-----
+
+* Add a called_once property to adapter
+* Enable case sensitive matching
+* Provide fixture extras for pip
+* Allow doing real_http per mock via the mocker
+* Return b'' when reading closed response
+* Fixture documentation error
+
 1.0.0
 -----
 
@@ -9,6 +19,7 @@ CHANGES
 * Doc fixups
 * Expose cert and proxies as attributes of the last request
 * Add timeout and allow_retries to RequestProxy
+* Add trove support for py34 and remove py33
 * Fix py34 DB issue and remove py33/py26
 * Remove pypip.in badge from readme
 
