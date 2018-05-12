@@ -4,7 +4,7 @@
 #
 Name     : requests-mock
 Version  : 1.5.0
-Release  : 25
+Release  : 26
 URL      : http://pypi.debian.net/requests-mock/requests-mock-1.5.0.tar.gz
 Source0  : http://pypi.debian.net/requests-mock/requests-mock-1.5.0.tar.gz
 Summary  : Mock out responses from the requests package
@@ -62,7 +62,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1526064825
+export SOURCE_DATE_EPOCH=1526164101
 python3 setup.py build -b py3
 
 %check
