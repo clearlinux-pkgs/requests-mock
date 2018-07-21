@@ -1,6 +1,23 @@
 CHANGES
 =======
 
+1.5.2
+-----
+
+* Fix discovery of pytest version and default
+* Add a docstring to the pytest fixture
+* Include release note for py.test
+
+1.5.1
+-----
+
+* Collapse CircleCI configuration
+* Support older pytest versions
+* Record value of stream parameter in request history
+* Some additional gitignores
+* Include reno in circleci publish job
+* Prefer readthedocs.io instead of readthedocs.org for doc links
+
 1.5.0
 -----
 
