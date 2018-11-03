@@ -4,32 +4,24 @@
 #
 Name     : requests-mock
 Version  : 1.5.2
-Release  : 34
+Release  : 35
 URL      : http://pypi.debian.net/requests-mock/requests-mock-1.5.2.tar.gz
 Source0  : http://pypi.debian.net/requests-mock/requests-mock-1.5.2.tar.gz
 Summary  : Mock out responses from the requests package
 Group    : Development/Tools
 License  : Apache-2.0
-Requires: requests-mock-python3
-Requires: requests-mock-license
-Requires: requests-mock-python
-Requires: Sphinx
+Requires: requests-mock-license = %{version}-%{release}
+Requires: requests-mock-python = %{version}-%{release}
+Requires: requests-mock-python3 = %{version}-%{release}
 Requires: fixtures
-Requires: pytest
-Requires: python-mock
 Requires: requests
 Requires: six
-Requires: testrepository
-Requires: testtools
 BuildRequires : buildreq-distutils3
 BuildRequires : extras
 BuildRequires : fixtures
 BuildRequires : pbr
-BuildRequires : pip
 BuildRequires : python-mock
-BuildRequires : python3-dev
 BuildRequires : requests
-BuildRequires : setuptools
 BuildRequires : six
 BuildRequires : testtools
 
@@ -48,7 +40,7 @@ license components for the requests-mock package.
 %package python
 Summary: python components for the requests-mock package.
 Group: Default
-Requires: requests-mock-python3
+Requires: requests-mock-python3 = %{version}-%{release}
 
 %description python
 python components for the requests-mock package.
@@ -71,8 +63,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1532214839
-python3 setup.py build -b py3
+export SOURCE_DATE_EPOCH=1541278478
+python3 setup.py build
 
 %check
 export http_proxy=http://127.0.0.1:9/
@@ -81,9 +73,9 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 py.test-2.7 --verbose py2 || :
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/requests-mock
-cp LICENSE %{buildroot}/usr/share/doc/requests-mock/LICENSE
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/requests-mock
+cp LICENSE %{buildroot}/usr/share/package-licenses/requests-mock/LICENSE
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -92,8 +84,8 @@ echo ----[ mark ]----
 %defattr(-,root,root,-)
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/requests-mock/LICENSE
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/requests-mock/LICENSE
 
 %files python
 %defattr(-,root,root,-)
