@@ -4,7 +4,7 @@
 #
 Name     : requests-mock
 Version  : 1.7.0
-Release  : 44
+Release  : 45
 URL      : https://files.pythonhosted.org/packages/1c/62/e64412925abe4531a48502ae2c6269f18bf83acb86503337fe1ae74d1e7d/requests-mock-1.7.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/1c/62/e64412925abe4531a48502ae2c6269f18bf83acb86503337fe1ae74d1e7d/requests-mock-1.7.0.tar.gz
 Summary  : Mock out responses from the requests package
