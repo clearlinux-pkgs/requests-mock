@@ -4,7 +4,7 @@
 #
 Name     : requests-mock
 Version  : 1.7.0
-Release  : 45
+Release  : 46
 URL      : https://files.pythonhosted.org/packages/1c/62/e64412925abe4531a48502ae2c6269f18bf83acb86503337fe1ae74d1e7d/requests-mock-1.7.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/1c/62/e64412925abe4531a48502ae2c6269f18bf83acb86503337fe1ae74d1e7d/requests-mock-1.7.0.tar.gz
 Summary  : Mock out responses from the requests package
@@ -29,8 +29,92 @@ BuildRequires : testtools
 ===============================
 requests-mock
 ===============================
+
 .. image:: https://badge.fury.io/py/requests-mock.png
-:target: https://pypi.org/project/requests-mock/
+    :target: https://pypi.org/project/requests-mock/
+
+.. image:: https://circleci.com/gh/jamielennox/requests-mock.svg?style=svg
+    :target: https://circleci.com/gh/jamielennox/requests-mock
+
+Intro
+=====
+
+`requests-mock` provides a building block to stub out the HTTP `requests`_ portions of your testing code.
+You should checkout the `docs`_ for more information.
+
+The Basics
+==========
+
+Everything in `requests`_ eventually goes through an adapter to do the transport work.
+`requests-mock` creates a custom `adapter` that allows you to predefine responses when certain URIs are called.
+
+There are then a number of methods provided to get the adapter used.
+
+A simple example:
+
+.. code:: python
+
+    >>> import requests
+    >>> import requests_mock
+
+    >>> session = requests.Session()
+    >>> adapter = requests_mock.Adapter()
+    >>> session.mount('mock', adapter)
+
+    >>> adapter.register_uri('GET', 'mock://test.com', text='data')
+    >>> resp = session.get('mock://test.com')
+    >>> resp.status_code, resp.text
+    (200, 'data')
+
+Obviously having all URLs be `mock://` prefixed isn't going to useful, so you can use `requests_mock.mock` to get the adapter into place.
+
+As a context manager:
+
+.. code:: python
+
+    >>> with requests_mock.mock() as m:
+    ...     m.get('http://test.com', text='data')
+    ...     requests.get('http://test.com').text
+    ...
+    'data'
+
+Or as a decorator:
+
+.. code:: python
+
+    >>> @requests_mock.mock()
+    ... def test_func(m):
+    ...     m.get('http://test.com', text='data')
+    ...     return requests.get('http://test.com').text
+    ...
+    >>> test_func()
+    'data'
+
+For more information checkout the `docs`_.
+
+Reporting Bugs
+==============
+
+Development and bug tracking is performed on `GitHub`_.
+
+License
+=======
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may
+not use this file except in compliance with the License. You may obtain
+a copy of the License at
+
+     https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations
+under the License.
+
+.. _requests: http://python-requests.org
+.. _docs: https://requests-mock.readthedocs.io/
+.. _GitHub: https://github.com/jamielennox/requests-mock
 
 %package license
 Summary: license components for the requests-mock package.
@@ -53,6 +137,7 @@ python components for the requests-mock package.
 Summary: python3 components for the requests-mock package.
 Group: Default
 Requires: python3-core
+Provides: pypi(requests-mock)
 
 %description python3
 python3 components for the requests-mock package.
@@ -60,13 +145,14 @@ python3 components for the requests-mock package.
 
 %prep
 %setup -q -n requests-mock-1.7.0
+cd %{_builddir}/requests-mock-1.7.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1567438746
+export SOURCE_DATE_EPOCH=1583219450
 # -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
@@ -88,7 +174,7 @@ py.test-2.7 --verbose py2 || :
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/requests-mock
-cp LICENSE %{buildroot}/usr/share/package-licenses/requests-mock/LICENSE
+cp %{_builddir}/requests-mock-1.7.0/LICENSE %{buildroot}/usr/share/package-licenses/requests-mock/a018430a439541feea5dbfb78eecb64b4140172e
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -99,7 +185,7 @@ echo ----[ mark ]----
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/requests-mock/LICENSE
+/usr/share/package-licenses/requests-mock/a018430a439541feea5dbfb78eecb64b4140172e
 
 %files python
 %defattr(-,root,root,-)
