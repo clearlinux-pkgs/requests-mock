@@ -4,7 +4,7 @@
 #
 Name     : requests-mock
 Version  : 1.9.3
-Release  : 61
+Release  : 62
 URL      : https://files.pythonhosted.org/packages/71/1e/1680394d9ad02bf7fb34f6e161b6eff62c972f2c1e647389ce2d324b3c25/requests-mock-1.9.3.tar.gz
 Source0  : https://files.pythonhosted.org/packages/71/1e/1680394d9ad02bf7fb34f6e161b6eff62c972f2c1e647389ce2d324b3c25/requests-mock-1.9.3.tar.gz
 Summary  : Mock out responses from the requests package
@@ -20,6 +20,7 @@ BuildRequires : buildreq-distutils3
 BuildRequires : extras
 BuildRequires : fixtures
 BuildRequires : pbr
+BuildRequires : pytest
 BuildRequires : python-mock
 BuildRequires : requests
 BuildRequires : six
@@ -67,15 +68,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1622232542
+export SOURCE_DATE_EPOCH=1633196902
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
@@ -83,7 +84,7 @@ python3 setup.py build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-py.test-2.7 --verbose py2 || :
+pytest --verbose || :
 %install
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
